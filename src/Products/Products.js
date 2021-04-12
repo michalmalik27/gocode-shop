@@ -7,7 +7,8 @@ let key = 1;
 const Products = ({products}) =>
 
 	<section className="products">
-		{products.map(p => <Product key={key++} title={p.title} image={p.image} price={p.price}></Product>)}			
+		{products.map(p => <Product key={key++} title={p.title} image={p.image} price={p.price}></Product>)}	
+				
 	</section>;
 
 
