@@ -9,6 +9,7 @@ const Product = (details) =>
         <div className="product-info">
           <h5>{details.title}</h5>
           <h6>${details.price.toString()}</h6>
+          <h6>{details.category}</h6>
         </div>
     </div>;
 

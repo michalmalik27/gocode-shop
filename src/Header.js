@@ -1,17 +1,6 @@
 
 import './Header.css';
-// import Select from './Select/Select';
-
-const filters = [
-	'All Jackets',
-	'2016',
-	'jacket',
-	'jackets',
-	'layers',
-	'Obermeyer',
-	'Roxy',
-	'womens'
-];
+import Select from './Select/Select';
 
 const sorts = [
 	'Featured',
@@ -24,13 +13,14 @@ const sorts = [
 	'Date, old to new'
 ];
 
-const Header = () =>{
+const Header = ({filters, onFilterSelected}) =>{
 	return (
 		<nav className="product-filter">
 		<h1>Jackets</h1>
   
 		<div className="sort">
-		  <div className="collection-sort">
+			<Select title="Filter by:" list={filters} onSelected={onFilterSelected}></Select>
+		  {/* <div className="collection-sort">
 			<label>Filter by:</label>
 			<select>
 			  <option value="/">All Jackets</option>
@@ -42,7 +32,7 @@ const Header = () =>{
 			  <option value="/">Roxy</option>
 			  <option value="/">womens</option>
 			</select>
-		  </div>
+		  </div> */}
   
 		  <div className="collection-sort">
 			<label>Sort by:</label>
