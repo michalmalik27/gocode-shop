@@ -1,29 +1,28 @@
+import { useState } from "react";
+import "./Select.css";
 
- import {useState} from "react";
- import './Select.css';
+const Select = ({ title, list, onSelected }) => {
+  const [selected, setSelected] = useState("");
 
- const Select  = ({title, list, onSelected}) => {
-	
-	const [selected, setSelected] = useState('');
-
-	let selectedChanged = (event) => {
-		setSelected(event.target.value);
+  let selectedChanged = (event) => {
+    setSelected(event.target.value);
+    if (onSelected){
 		onSelected(event.target.value);
-		//onSelected(selected);
-	};
+    	//onSelected(selected);
+	}
+  };
 
-	return (
-		<div className="collection-sort">
-		<label>{title}:</label>
- 		<select onChange={selectedChanged}>
-		 	<option value="">All...</option>
- 			{
- 				list.map(val => <option value={val}>{val}</option>)
- 			}
- 		</select>
- 	</div>
-	);
- };
-	
+  return (
+    <div className="collection-sort">
+      <label>{title}:</label>
+      <select onChange={selectedChanged}>
+        <option value="">All...</option>
+        {list.map((val) => (
+          <option value={val}>{val}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
- export default Select;
+export default Select;
