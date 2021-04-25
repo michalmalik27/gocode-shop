@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./Select.css";
 
 const Select = ({ title, list, onSelected }) => {
-  const [selected, setSelected] = useState("");
+  // const [selected, setSelected] = useState("");
 
   let selectedChanged = (event) => {
-    setSelected(event.target.value);
+    // setSelected(event.target.value);
     if (onSelected){
 		onSelected(event.target.value);
     	//onSelected(selected);
@@ -18,7 +18,7 @@ const Select = ({ title, list, onSelected }) => {
       <select onChange={selectedChanged}>
         <option value="">All...</option>
         {list.map((val) => (
-          <option value={val}>{val}</option>
+          <option key={val} value={val}>{val}</option>
         ))}
       </select>
     </div>

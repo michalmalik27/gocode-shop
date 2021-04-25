@@ -24,24 +24,7 @@ const Header = ({ filters, onFilterSelected }) => {
           onSelected={onFilterSelected}
         ></Select>
 
-        <Select
-          title="Sort by:"
-          list={sorts}
-        ></Select>
-
-        {/* <div className="collection-sort">
-          <label>Sort by:</label>
-          <select>
-            <option value="/">Featured</option>
-            <option value="/">Best Selling</option>
-            <option value="/">Alphabetically, A-Z</option>
-            <option value="/">Alphabetically, Z-A</option>
-            <option value="/">Price, low to high</option>
-            <option value="/">Price, high to low</option>
-            <option value="/">Date, new to old</option>
-            <option value="/">Date, old to new</option>
-          </select>
-        </div> */}
+        <Select title="Sort by:" list={sorts}></Select>
       </div>
     </nav>
   );

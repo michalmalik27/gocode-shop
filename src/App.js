@@ -215,11 +215,11 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       {/* <Toggle/> */}
       <Header filters={categories} onFilterSelected={categorySelected} />
       <Products products={shownProducts} />
-    </div>
+    </>
   );
 }
 

@@ -1,14 +1,14 @@
 import "./Product.css";
 
-const Product = (details) => (
+const Product = ({title, image, price, category}) => (
   <div className="product-card">
     <div className="product-image">
-      <img src={details.image} />
+      <img src={image} />
     </div>
     <div className="product-info">
-      <h5>{details.title}</h5>
-      <h6>${details.price.toString()}</h6>
-      <h6>{details.category}</h6>
+      <h5>{title}</h5>
+      <h6>${price}</h6>
+      <h6>{category}</h6>
     </div>
   </div>
 );
