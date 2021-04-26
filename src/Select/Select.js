@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Select.css";
 
 const Select = ({ title, list, onSelected }) => {
-  // const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("");
 
   let selectedChanged = (event) => {
-    // setSelected(event.target.value);
-    if (onSelected) {
-      onSelected(event.target.value);
-      //onSelected(selected);
-    }
+    setSelected(event.target.value);
+    // if (onSelected) {
+    //   onSelected(event.target.value);
+    // }
   };
+
+  useEffect(() => {
+    if (onSelected) onSelected(selected);
+  }, [selected]);
 
   return (
     <div className="collection-sort">
