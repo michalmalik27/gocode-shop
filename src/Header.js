@@ -24,7 +24,10 @@ const Header = ({ filters, onFilterSelected }) => {
           onSelected={onFilterSelected}
         ></Select>
 
-        <Select title="Sort by:" list={sorts}></Select>
+        <Select
+          title="Sort by:"
+          list={sorts}
+        ></Select>
       </div>
     </nav>
   );

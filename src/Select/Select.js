@@ -6,10 +6,10 @@ const Select = ({ title, list, onSelected }) => {
 
   let selectedChanged = (event) => {
     // setSelected(event.target.value);
-    if (onSelected){
-		onSelected(event.target.value);
-    	//onSelected(selected);
-	}
+    if (onSelected) {
+      onSelected(event.target.value);
+      //onSelected(selected);
+    }
   };
 
   return (
@@ -18,7 +18,9 @@ const Select = ({ title, list, onSelected }) => {
       <select onChange={selectedChanged}>
         <option value="">All...</option>
         {list.map((val) => (
-          <option key={val} value={val}>{val}</option>
+          <option key={val} value={val}>
+            {val}
+          </option>
         ))}
       </select>
     </div>
