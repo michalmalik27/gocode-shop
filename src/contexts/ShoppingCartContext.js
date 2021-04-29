@@ -1,4 +1,4 @@
-import { useContext, useState, createContext, useEffect } from "react";
+import { useContext, useState, createContext } from "react";
 
 const ShoppingCartContext = createContext();
 
@@ -6,62 +6,80 @@ export function ShoppingCartProvider({ children }) {
   const [shoppingCart, setShoppingCart] = useState([]);
 
   const increaseProductCount = (product) => {
-    let newShoppingCart = [];
+    let _product = getProduct(product);
 
-    if (shoppingCart.some((s) => s.id === product.id)) {
-      newShoppingCart = shoppingCart.map((s) => {
-        if (s.id === product.id) {
-          s.count++;
-        }
-        return s;
-      });
+    if (!_product) {
+      addProduct(product, 1);
     } else {
-      newShoppingCart = [...shoppingCart, { ...product, count: 1 }];
+      updateProductCount(product, _product.count + 1);
     }
-
-    setShoppingCart(newShoppingCart);
   };
 
   const decreaseProductCount = (product) => {
-    if (!shoppingCart.some((s) => s.id === product.id)) {
+    let _product = getProduct(product);
+
+    if (!_product) {
       return;
     }
 
-    let newShoppingCart = shoppingCart
-      .map((s) => {
-        if (s.id === product.id) {
-          s.count--;
-        }
-        return s;
-      })
-      .filter((s) => s.count > 0);
-
-    setShoppingCart(newShoppingCart);
+    if (_product.count === 1) {
+      removeProduct(_product);
+    } else {
+      updateProductCount(product, _product.count - 1);
+    }
   };
 
-  const setProductCount = (product, count) => {
-    let newShoppingCart = [];
+  const setProductCount = (product, count = 0) => {
+    let _product = getProduct(product);
 
-    if (count <= 0) {
-      newShoppingCart = shoppingCart.filter((s) => s.id !== product.id);
-    } else if (!shoppingCart.some((s) => s.id === product.id)) {
-      newShoppingCart = [...shoppingCart, { ...product, count: count }];
-    } else {
-      newShoppingCart = shoppingCart.map((s) => {
-        if (s.id === product.id) {
-          s.count = count;
-        }
-        return s;
-      });
+    if (_product) {
+      count <= 0
+        ? removeProduct(_product)
+        : updateProductCount(_product, count);
+    } else if (count > 0) {
+      addProduct(product, count);
     }
-
-    setShoppingCart(newShoppingCart);
   };
 
   const getProductCount = (product) => {
-    let productInCart = shoppingCart.find((p) => p.id === product.id);
+    let productInCart = getProduct(product);
 
     return productInCart ? productInCart.count : 0;
+  };
+
+  const getProduct = (product) => {
+    return shoppingCart.find((p) => p.id === product.id);
+  };
+
+  const updateProductCount = (product, count) => {
+    let _shoppingCart = shoppingCart.map((s) => {
+      if (s.id === product.id) {
+        s.count = count;
+      }
+      return s;
+    });
+
+    setShoppingCart(_shoppingCart);
+  };
+
+  const removeProduct = (product) => {
+    let _shoppingCart = shoppingCart.filter((p) => p.id !== product.id);
+
+    setShoppingCart(_shoppingCart);
+  };
+
+  const addProduct = (product, count) => {
+    let _shoppingCart = [...shoppingCart, { ...product, count: count }];
+
+    setShoppingCart(_shoppingCart);
+  };
+
+  const getTotalPrice = () => {
+    return shoppingCart.map((p) => p.price).reduce((a, b) => a + b, 0);
+  };
+
+  const getProductsCount = () => {
+    return shoppingCart.length();
   };
 
   return (
@@ -72,6 +90,8 @@ export function ShoppingCartProvider({ children }) {
         decreaseProductCount,
         setProductCount,
         getProductCount,
+        getProductsCount,
+        getTotalPrice,
       }}
     >
       {children}
