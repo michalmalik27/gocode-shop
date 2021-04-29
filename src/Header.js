@@ -1,5 +1,6 @@
-import "./Header.css";
+//import "./Header.css";
 import Select from "./Select/Select";
+import { Form, Container } from "react-bootstrap";
 
 const sorts = [
   "Featured",
@@ -14,22 +15,18 @@ const sorts = [
 
 const Header = ({ filters, onFilterSelected }) => {
   return (
-    <nav className="product-filter">
-      <h1>Jackets</h1>
-
-      <div className="sort">
-        <Select
-          title="Filter by:"
-          list={filters}
-          onSelected={onFilterSelected}
-        ></Select>
-
-        <Select
-          title="Sort by:"
-          list={sorts}
-        ></Select>
-      </div>
-    </nav>
+    <Container>
+      <Form>
+        <Form.Row>
+          <Select
+            title="Filter by:"
+            list={filters}
+            onSelected={onFilterSelected}
+          />
+          <Select title="Sort by:" list={sorts} />
+        </Form.Row>
+      </Form>
+    </Container>
   );
 };
 

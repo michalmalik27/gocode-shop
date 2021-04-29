@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
-import "./App.css";
+//import "./App.css";
 import Header from "./Header.js";
 import Products from "./Products/Products";
 import Loading from "./Loading/Loading";
-import Toggle from "./Toggle";
+import ShoppingCart from "./ShoppingCart/ShoppingCart";
+import { ShoppingCartProvider } from "./contexts/ShoppingCartContext";
+import { Container, Row, Col, Jumbotron } from "react-bootstrap";
 
 const groupBy = (xs, key) =>
   xs.reduce((rv, x) => {
@@ -37,19 +39,37 @@ function App() {
   };
 
   return (
-    <>
-      {!isLoaded && <Loading/>}
-      {isLoaded && (
-        <>
-          <Header filters={categories} onFilterSelected={onSelectedCategory} />
-          <Products
-            products={products.filter(
-              (p) => selectedCategory === "" || p.category === selectedCategory
-            )}
-          />
-        </>
-      )}
-    </>
+    <ShoppingCartProvider>
+      <Container>
+        <Jumbotron>
+          <h1>Shooping Online</h1>
+        </Jumbotron>
+
+        {!isLoaded && <Loading />}
+        {isLoaded && (
+          <>
+            <Row>
+              <Col>
+                <Header
+                  filters={categories}
+                  onFilterSelected={onSelectedCategory}
+                />
+
+                <Products
+                  products={products.filter(
+                    (p) =>
+                      selectedCategory === "" || p.category === selectedCategory
+                  )}
+                />
+              </Col>
+              <Col>
+                <ShoppingCart />
+              </Col>
+            </Row>
+          </>
+        )}
+      </Container>
+    </ShoppingCartProvider>
   );
 }
 

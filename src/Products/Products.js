@@ -1,18 +1,20 @@
 import Product from "../Product/Product.js";
-import "./Products.css";
+//import "./Products.css";
+import { CardColumns, Row, Col } from "react-bootstrap";
 
 const Products = ({ products }) => (
-  <section className="products">
+  <CardColumns>
     {products.map(({ id, title, image, price, category }) => (
       <Product
         key={id}
+        id={id}
         title={title}
         image={image}
         price={price}
         category={category}
       ></Product>
     ))}
-  </section>
+  </CardColumns>
 );
 
 export default Products;

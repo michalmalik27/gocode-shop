@@ -10,6 +10,9 @@ html, body {
   }
   
   .spinner-examples {
+	background: linear-gradient(#8adca8 0%, #4b86be 100%);
+	background-size: 100% auto;
+	font-family: sans-serif;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	padding: 2rem;
