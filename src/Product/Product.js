@@ -1,6 +1,7 @@
 import { useShoppingCart } from "../contexts/ShoppingCartContext";
 import "./Product.css";
 import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Plus } from "react-bootstrap-icons";
 
 const Product = (product) => {
   const { id, title, image, price } = product;
@@ -12,7 +13,10 @@ const Product = (product) => {
   } = useShoppingCart();
 
   return (
-    <Card className="p-7">
+    <Card
+      className="p-7"
+      border={getProductCount(product) > 0 ? "success" : "light"}
+    >
       <Card.Img src={image} className="product-image" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>

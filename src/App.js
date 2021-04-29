@@ -7,6 +7,7 @@ import Loading from "./Loading/Loading";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import { ShoppingCartProvider } from "./contexts/ShoppingCartContext";
 import { Container, Row, Col, Jumbotron } from "react-bootstrap";
+import { Shop } from "react-bootstrap-icons";
 
 const groupBy = (xs, key) =>
   xs.reduce((rv, x) => {
