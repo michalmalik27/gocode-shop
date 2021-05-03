@@ -1,10 +1,9 @@
 import { useShoppingCart } from "../contexts/ShoppingCartContext";
 import "./Product.css";
 import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
-import { Plus } from "react-bootstrap-icons";
 
 const Product = (product) => {
-  const { id, title, image, price } = product;
+  const { title, image, price } = product;
   const {
     increaseProductCount,
     decreaseProductCount,

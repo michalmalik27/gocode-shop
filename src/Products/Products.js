@@ -1,4 +1,4 @@
-import Product from "../Product/Product.js";
+import Product from "./Product.js";
 //import "./Products.css";
 import { CardColumns, Row, Col } from "react-bootstrap";
 

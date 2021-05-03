@@ -1,16 +1,59 @@
 import { useShoppingCart } from "../contexts/ShoppingCartContext";
-import { ListGroup, Badge } from "react-bootstrap";
+import { ListGroup, Badge, Card, Image } from "react-bootstrap";
+import CurrencyFormat from "react-currency-format";
 
 const ShoppingCart = () => {
-  const { shoppingCart } = useShoppingCart();
+  const {
+    shoppingCart,
+    getTotalPrice,
+    getProductsCount,
+    getProductCount,
+    setProductCount,
+    increaseProductCount,
+    decreaseProductCount,
+  } = useShoppingCart();
   return (
-    <ListGroup>
-      {shoppingCart.map(({ id, title, image, price, category, count }) => (
-        <ListGroup.Item>
-          {title} <Badge>{price}</Badge> * {count}
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+    <Card>
+      <Card.Header as="h5"> You'r Shoppin Cart</Card.Header>
+      <Card.Body>
+        {shoppingCart.length > 0 ? (
+          <ListGroup>
+            {shoppingCart.map((product) => (
+              <ListGroup.Item>
+                <p>
+                  {product.title}{" "}
+                  <Image width={20} height={20} src={product.image} />
+                </p>
+                <span>Count: </span>
+                <Badge variant="secondary">{product.count}</Badge> |
+                <span> Price: </span>
+                <Badge pill variant="dark">${product.price}</Badge>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        ) : (
+          <span>There are no products in the cart</span>
+        )}
+      </Card.Body>
+      <Card.Footer>
+        <span> Products: </span>
+        <CurrencyFormat
+          value={getProductsCount()}
+          displayType={"text"}
+          thousandSeparator={true}
+          renderText={(value) => <label>{value}</label>}
+        />{" "}
+        |<span> Price: </span>
+        <CurrencyFormat
+          value={getTotalPrice()}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"$"}
+          decimalScale="2"
+          renderText={(value) => <label>{value}</label>}
+        />
+      </Card.Footer>
+    </Card>
   );
 };
 

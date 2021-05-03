@@ -75,11 +75,15 @@ export function ShoppingCartProvider({ children }) {
   };
 
   const getTotalPrice = () => {
-    return shoppingCart.map((p) => p.price).reduce((a, b) => a + b, 0);
+    return shoppingCart
+      .map((p) => p.price * p.count)
+      .reduce((a, b) => a + b, 0);
   };
 
   const getProductsCount = () => {
-    return shoppingCart.length();
+    return shoppingCart
+      .map((p) => p.count)
+      .reduce((a, b) => a + b, 0);
   };
 
   return (
