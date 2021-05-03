@@ -20,23 +20,57 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
+  const [selectedMinPrice, setSelectedMinPrice] = useState();
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState();
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    setCategories(Object.keys(groupBy(products, "category")));
+    setPricesRange();
+  }, [products]);
+
+  useEffect(() => {
+    setSelectedMinPrice(minPrice);
+  }, [minPrice]);
+
+  useEffect(() => {
+    setSelectedMaxPrice(maxPrice);
+  }, [maxPrice]);
+
+  useEffect(() => {
+    setPricesRange();
+  }, [selectedCategory]);
+
+  let setPricesRange = () => {
+    let prices = products
+      .filter((p) => selectedCategory === "" || p.category === selectedCategory)
+      .map((x) => x.price);
+
+    setMinPrice(Math.min(...prices));
+    setMaxPrice(Math.max(...prices));
+  };
 
   let fetchProducts = () => {
     fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
-        setCategories(Object.keys(groupBy(data, "category")));
         setIsLoaded(true);
       });
   };
 
   let onSelectedCategory = (category) => {
     setSelectedCategory(category);
+  };
+
+  let onRangePriceChanged = (min, max) => {
+    setSelectedMinPrice(min);
+    setSelectedMaxPrice(max);
   };
 
   return (
@@ -46,20 +80,27 @@ function App() {
           <h1>Shooping Online</h1>
         </Jumbotron>
 
-        {!isLoaded && <Loading />}
-        {isLoaded && (
+        {!isLoaded ? (
+          <Loading />
+        ) : (
           <>
             <Row>
               <Col>
                 <Header
                   filters={categories}
                   onFilterSelected={onSelectedCategory}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  onRangePriceChanged={onRangePriceChanged}
                 />
 
                 <Products
                   products={products.filter(
                     (p) =>
-                      selectedCategory === "" || p.category === selectedCategory
+                      (selectedCategory === "" ||
+                        p.category === selectedCategory) &&
+                      p.price >= selectedMinPrice &&
+                      p.price <= selectedMaxPrice
                   )}
                 />
               </Col>
