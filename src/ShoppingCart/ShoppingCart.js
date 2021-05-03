@@ -27,7 +27,9 @@ const ShoppingCart = () => {
                 <span>Count: </span>
                 <Badge variant="secondary">{product.count}</Badge> |
                 <span> Price: </span>
-                <Badge pill variant="dark">${product.price}</Badge>
+                <Badge pill variant="dark">
+                  ${product.price}
+                </Badge>
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -37,20 +39,19 @@ const ShoppingCart = () => {
       </Card.Body>
       <Card.Footer>
         <span> Products: </span>
-        <CurrencyFormat
-          value={getProductsCount()}
-          displayType={"text"}
-          thousandSeparator={true}
-          renderText={(value) => <label>{value}</label>}
-        />{" "}
-        |<span> Price: </span>
+        <Badge variant="secondary">{getProductsCount()}</Badge>|
+        <span> Price: </span>
         <CurrencyFormat
           value={getTotalPrice()}
           displayType={"text"}
           thousandSeparator={true}
           prefix={"$"}
           decimalScale="2"
-          renderText={(value) => <label>{value}</label>}
+          renderText={(value) => (
+            <Badge pill variant="dark">
+              {value}
+            </Badge>
+          )}
         />
       </Card.Footer>
     </Card>

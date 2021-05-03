@@ -1,6 +1,6 @@
 import { useShoppingCart } from "../contexts/ShoppingCartContext";
 import "./Product.css";
-import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Card, Button, InputGroup, FormControl, Badge } from "react-bootstrap";
 
 const Product = (product) => {
   const { title, image, price } = product;
@@ -19,8 +19,11 @@ const Product = (product) => {
       <Card.Img src={image} className="product-image" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text></Card.Text>
-        <Card.Subtitle>${price}</Card.Subtitle>
+        <Card.Text>
+          <Badge pill variant="dark">
+            ${price}
+          </Badge>
+        </Card.Text>
         <InputGroup size="sm">
           <InputGroup.Prepend>
             <Button
@@ -52,22 +55,6 @@ const Product = (product) => {
         </InputGroup>
       </Card.Body>
     </Card>
-
-    // <div
-    //   className="product-card"
-    //   onClick={() => {
-    //     increaseProductCount(product);
-    //   }}
-    // >
-    //   <div className="product-image">
-    //     <img src={image} />
-    //   </div>
-    //   <div className="product-info">
-    //     <h5>{title}</h5>
-    //     <h6>${price}</h6>
-    //     <h6>{category}</h6>
-    //   </div>
-    // </div>
   );
 };
 
