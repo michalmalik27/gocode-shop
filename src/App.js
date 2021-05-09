@@ -1,117 +1,65 @@
-import { useEffect, useState } from "react";
-
-//import "./App.css";
-import Header from "./Header.js";
-import Products from "./Products/Products";
-import Loading from "./Loading/Loading";
+import ProductsPage from "./Products/ProductsPage";
+import ProductPage from "./Products/ProductsPage";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
-import { ShoppingCartProvider } from "./contexts/ShoppingCartContext";
-import { Container, Row, Col, Jumbotron } from "react-bootstrap";
-import { Shop } from "react-bootstrap-icons";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-const groupBy = (xs, key) =>
-  xs.reduce((rv, x) => {
-    rv[x[key]] = true || [];
-    return rv;
-  }, {});
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [minPrice, setMinPrice] = useState();
-  const [maxPrice, setMaxPrice] = useState();
-  const [selectedMinPrice, setSelectedMinPrice] = useState();
-  const [selectedMaxPrice, setSelectedMaxPrice] = useState();
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    setCategories(Object.keys(groupBy(products, "category")));
-    setPricesRange();
-  }, [products]);
-
-  useEffect(() => {
-    setSelectedMinPrice(minPrice);
-  }, [minPrice]);
-
-  useEffect(() => {
-    setSelectedMaxPrice(maxPrice);
-  }, [maxPrice]);
-
-  useEffect(() => {
-    setPricesRange();
-  }, [selectedCategory]);
-
-  let setPricesRange = () => {
-    let prices = products
-      .filter((p) => selectedCategory === "" || p.category === selectedCategory)
-      .map((x) => x.price);
-
-    setMinPrice(Math.min(...prices));
-    setMaxPrice(Math.max(...prices));
-  };
-
-  let fetchProducts = () => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setIsLoaded(true);
-      });
-  };
-
-  let onSelectedCategory = (category) => {
-    setSelectedCategory(category);
-  };
-
-  let onRangePriceChanged = (min, max) => {
-    setSelectedMinPrice(min);
-    setSelectedMaxPrice(max);
-  };
+  const classes = useStyles();
 
   return (
-    <ShoppingCartProvider>
-      <Container>
-        <Jumbotron>
-          <h1>Shooping Online</h1>
-        </Jumbotron>
+    <>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography variant="h6">Shooping Online</Typography>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
 
-        {!isLoaded ? (
-          <Loading />
-        ) : (
-          <>
-            <Row>
-              <Col>
-                <Header
-                  filters={categories}
-                  onFilterSelected={onSelectedCategory}
-                  minPrice={minPrice}
-                  maxPrice={maxPrice}
-                  onRangePriceChanged={onRangePriceChanged}
-                />
-
-                <Products
-                  products={products.filter(
-                    (p) =>
-                      (selectedCategory === "" ||
-                        p.category === selectedCategory) &&
-                      p.price >= selectedMinPrice &&
-                      p.price <= selectedMaxPrice
-                  )}
-                />
-              </Col>
-              <Col>
-                <ShoppingCart />
-              </Col>
-            </Row>
-          </>
-        )}
-      </Container>
-    </ShoppingCartProvider>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={9}>
+            <Paper>
+              <Router>
+                <Switch>
+                  <Route path="/products">
+                    <ProductsPage />
+                  </Route>
+                  <Route path={"/products/:id"}>
+                    <ProductPage />
+                  </Route>
+                </Switch>
+              </Router>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <ShoppingCart />
+          </Grid>
+        </Grid>
+      </div>
+    </>
   );
 }
 

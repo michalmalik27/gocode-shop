@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-//import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ShoppingCartProvider } from "./contexts/ShoppingCartContext";
+import { ProductsProvider } from "./contexts/ProductsContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ShoppingCartProvider>
+      <ProductsProvider>
+        <App />
+      </ProductsProvider>
+    </ShoppingCartProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
