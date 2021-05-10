@@ -24,7 +24,7 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    // maxWidth: 345,
   },
   media: {
     height: 140,
@@ -55,7 +55,7 @@ const Product = (product) => {
         <CardActionArea>
           <CardMedia className={classes.media} image={image} />
           <CardContent>
-            <Link to={`${match.url}/${id}`}>
+            <Link to={`products/${id}`}>
               <Typography gutterBottom variant="h5" component="h2">
                 {title}
               </Typography>

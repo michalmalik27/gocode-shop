@@ -78,9 +78,8 @@ const Header = (
         </Select>
       </FormControl>
       <Typography id="range-slider" gutterBottom>
-        Temperature range
+        Prices range
       </Typography>
-      {selectedMinPrice} - {selectedMaxPrice}
       <Slider
         value={[selectedMinPrice, selectedMaxPrice]}
         onChange={(event, newValue) => {
@@ -90,7 +89,7 @@ const Header = (
         }}
         min={getMinPriceByCategory()}
         max={getMaxPriceByCategory()}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="on"
         aria-labelledby="range-slider"
       />
     </div>

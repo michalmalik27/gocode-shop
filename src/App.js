@@ -1,13 +1,18 @@
+
 import ProductsPage from "./Products/ProductsPage";
-import ProductPage from "./Products/ProductsPage";
+import ProductPage from "./Products/ProductPage";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
+import { useShoppingCart } from "./contexts/ShoppingCartContext";
+
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +33,19 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-
+  const {
+    getProductsCount,
+  } = useShoppingCart();
   return (
     <>
       <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6">Shooping Online</Typography>
+          <IconButton aria-label="show shopping cart" color="inherit">
+            <Badge badgeContent={getProductsCount()} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Toolbar />
@@ -41,18 +53,16 @@ function App() {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={9}>
-            <Paper>
-              <Router>
-                <Switch>
-                  <Route path="/products/:id">
-                    <ProductPage />
-                  </Route>
-                  <Route path="/products">
-                    <ProductsPage />
-                  </Route>
-                </Switch>
-              </Router>
-            </Paper>
+            <Router>
+              <Switch>
+                <Route path="/products/:id">
+                  <ProductPage />
+                </Route>
+                <Route path="/">
+                  <ProductsPage />
+                </Route>
+              </Switch>
+            </Router>
           </Grid>
           <Grid item xs={3}>
             <ShoppingCart />
