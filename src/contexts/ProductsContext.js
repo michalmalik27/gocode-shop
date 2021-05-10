@@ -46,13 +46,8 @@ export function ProductsProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log("selectedCategory: " + selectedCategory);
-    let min = getMinPriceByCategory();
-    setSelectedMinPrice(min);
-    console.log(min);
-    let max = getMaxPriceByCategory();
-    setSelectedMaxPrice(max);
-    console.log(max);
+    setSelectedMinPrice(getMinPriceByCategory());
+    setSelectedMaxPrice(getMaxPriceByCategory());
   }, [selectedCategory]);
 
   return (

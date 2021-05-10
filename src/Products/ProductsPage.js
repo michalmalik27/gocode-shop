@@ -14,8 +14,6 @@ function ProductsPage() {
   const {
     products,
     setProducts,
-    categories,
-    setCategories,
     selectedCategory,
     selectedMaxPrice,
     selectedMinPrice,
@@ -43,7 +41,6 @@ function ProductsPage() {
       {isLoaded ? (
         <div>
           <Header />
-
           <Products
             products={products.filter(
               (p) =>

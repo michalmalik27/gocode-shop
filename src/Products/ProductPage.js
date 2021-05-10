@@ -43,19 +43,19 @@ const useStyles = makeStyles({
 const ProductPage = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const { isLoaded, setIsLoaded } = useState(false);
-  const { product, setProduct } = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [product, setProduct] = useState({});
 
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [id]);
 
   let fetchProduct = () => {
     fetch(`https://fakestoreapi.com/products/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setProduct({...data});
+        setProduct(data);
       })
       .then(() => {
         setIsLoaded(true);

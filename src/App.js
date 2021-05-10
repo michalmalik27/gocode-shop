@@ -44,11 +44,11 @@ function App() {
             <Paper>
               <Router>
                 <Switch>
+                  <Route path="/products/:id">
+                    <ProductPage />
+                  </Route>
                   <Route path="/products">
                     <ProductsPage />
-                  </Route>
-                  <Route path={"/products/:id"}>
-                    <ProductPage />
                   </Route>
                 </Switch>
               </Router>
