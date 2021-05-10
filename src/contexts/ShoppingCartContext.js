@@ -1,4 +1,4 @@
-import { useContext, useState, createContext } from "react";
+import { useContext, useState, createContext, useMemo } from "react";
 
 const ShoppingCartContext = createContext();
 
@@ -74,17 +74,13 @@ export function ShoppingCartProvider({ children }) {
     setShoppingCart(_shoppingCart);
   };
 
-  const getTotalPrice = () => {
-    return shoppingCart
-      .map((p) => p.price * p.count)
-      .reduce((a, b) => a + b, 0);
-  };
+  const getTotalPrice = useMemo(() =>
+    shoppingCart.map((p) => p.price * p.count).reduce((a, b) => a + b, 0)
+  );
 
-  const getProductsCount = () => {
-    return shoppingCart
-      .map((p) => p.count)
-      .reduce((a, b) => a + b, 0);
-  };
+  const getProductsCount = useMemo(() =>
+    shoppingCart.map((p) => p.count).reduce((a, b) => a + b, 0)
+  );
 
   return (
     <ShoppingCartContext.Provider

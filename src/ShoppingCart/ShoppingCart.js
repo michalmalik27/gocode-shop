@@ -39,10 +39,10 @@ const ShoppingCart = () => {
       </Card.Body>
       <Card.Footer>
         <span> Products: </span>
-        <Badge variant="secondary">{getProductsCount()}</Badge>|
+        <Badge variant="secondary">{getProductsCount}</Badge>|
         <span> Price: </span>
         <CurrencyFormat
-          value={getTotalPrice()}
+          value={getTotalPrice}
           displayType={"text"}
           thousandSeparator={true}
           prefix={"$"}

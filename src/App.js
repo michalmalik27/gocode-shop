@@ -42,7 +42,7 @@ function App() {
         <Toolbar>
           <Typography variant="h6">Shooping Online</Typography>
           <IconButton aria-label="show shopping cart" color="inherit">
-            <Badge badgeContent={getProductsCount()} color="secondary">
+            <Badge badgeContent={getProductsCount} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>

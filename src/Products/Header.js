@@ -41,8 +41,8 @@ const Header = (
     setSelectedMinPrice,
     selectedMaxPrice,
     setSelectedMaxPrice,
-    getMinPriceByCategory,
-    getMaxPriceByCategory,
+    minPriceByCategory,
+    maxPriceByCategory,
   } = useProducts();
 
   return (
@@ -87,8 +87,8 @@ const Header = (
           setSelectedMinPrice(newValue[0]);
           setSelectedMaxPrice(newValue[1]);
         }}
-        min={getMinPriceByCategory()}
-        max={getMaxPriceByCategory()}
+        min={minPriceByCategory}
+        max={maxPriceByCategory}
         valueLabelDisplay="on"
         aria-labelledby="range-slider"
       />

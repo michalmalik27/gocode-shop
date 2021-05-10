@@ -1,4 +1,4 @@
-import { useContext, useState, createContext, useEffect } from "react";
+import { useContext, useState, createContext, useEffect, useMemo } from "react";
 
 const ProductsContext = createContext();
 
@@ -25,29 +25,29 @@ export function ProductsProvider({ children }) {
     }
   }, [categories]);
 
-  const getMinPriceByCategory = () => {
-    return Math.min(
+  const minPriceByCategory = useMemo(() =>
+    Math.min(
       ...products
         .filter(
           (p) => selectedCategory === "" || p.category === selectedCategory
         )
         .map((x) => x.price)
-    );
-  };
+    )
+  );
 
-  const getMaxPriceByCategory = () => {
-    return Math.max(
+  const maxPriceByCategory = useMemo(() =>
+    Math.max(
       ...products
         .filter(
           (p) => selectedCategory === "" || p.category === selectedCategory
         )
         .map((x) => x.price)
-    );
-  };
+    )
+  );
 
   useEffect(() => {
-    setSelectedMinPrice(getMinPriceByCategory());
-    setSelectedMaxPrice(getMaxPriceByCategory());
+    setSelectedMinPrice(minPriceByCategory);
+    setSelectedMaxPrice(maxPriceByCategory);
   }, [selectedCategory]);
 
   return (
@@ -57,8 +57,8 @@ export function ProductsProvider({ children }) {
         setProducts,
         categories,
         setCategories,
-        getMinPriceByCategory,
-        getMaxPriceByCategory,
+        minPriceByCategory,
+        maxPriceByCategory,
         selectedCategory,
         setSelectedCategory,
         selectedMinPrice,
