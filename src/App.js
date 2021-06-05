@@ -1,30 +1,26 @@
-
 import ProductsPage from "./Products/ProductsPage";
 import ProductPage from "./Products/ProductPage";
-import ShoppingCart from "./ShoppingCart/ShoppingCart";
-import { useShoppingCart } from "./contexts/ShoppingCartContext";
+import CustomizedDialogs from "./ShoppingCart/ShoppingCart";
 
 import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(4),
+    color: theme.palette.text.secondary,
   },
   title: {
     flexGrow: 1,
@@ -33,26 +29,31 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const {
-    getProductsCount,
-  } = useShoppingCart();
   return (
     <>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6">Shooping Online</Typography>
-          <IconButton aria-label="show shopping cart" color="inherit">
-            <Badge badgeContent={getProductsCount} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <div className={classes.root}>
+        <AppBar position="sticky">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Shooping Online
+            </Typography>
+            <CustomizedDialogs></CustomizedDialogs>
+          </Toolbar>
+        </AppBar>
+      </div>
       <Toolbar />
 
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={9}>
+      <div className={classes.paper}>
+        {/* <Grid container spacing={3}>
+          <Grid item xs={12}> */}
             <Router>
               <Switch>
                 <Route path="/products/:id">
@@ -63,11 +64,11 @@ function App() {
                 </Route>
               </Switch>
             </Router>
-          </Grid>
+          {/* </Grid>
           <Grid item xs={3}>
             <ShoppingCart />
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
     </>
   );

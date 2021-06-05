@@ -1,16 +1,11 @@
-import { useState, useEffect } from "react";
-import { Form, Container } from "react-bootstrap";
+
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useProducts } from "../contexts/ProductsContext";
+import TextField from "@material-ui/core/TextField";
 
 const sorts = [
   "Featured",
@@ -30,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = (
-) => {
+const Header = () => {
   const classes = useStyles();
   const {
     categories,
@@ -46,16 +40,17 @@ const Header = (
   } = useProducts();
 
   return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Filter By:</InputLabel>
-        <Select
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6}>
+        <TextField
+          select
+          label="Filter By:"
+          variant="filled"
           value={selectedCategory}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           onChange={(event) => {
             setSelectedCategory(event.target.value);
           }}
+          fullWidth
         >
           <MenuItem value="">
             <em>All Categories...</em>
@@ -63,36 +58,41 @@ const Header = (
           {categories.map((item) => (
             <MenuItem value={item}>{item}</MenuItem>
           ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Sort By:</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+        </TextField>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <TextField
+          select
+          label="Sorting By:"
+          variant="filled"
+          value={selectedCategory}
           onChange={(event) => {}}
+          fullWidth
         >
+          <MenuItem value=""></MenuItem>
           {sorts.map((item) => (
             <MenuItem value={item}>{item}</MenuItem>
           ))}
-        </Select>
-      </FormControl>
-      <Typography id="range-slider" gutterBottom>
-        Prices range
-      </Typography>
-      <Slider
-        value={[selectedMinPrice, selectedMaxPrice]}
-        onChange={(event, newValue) => {
-          console.log(newValue);
-          setSelectedMinPrice(newValue[0]);
-          setSelectedMaxPrice(newValue[1]);
-        }}
-        min={minPriceByCategory}
-        max={maxPriceByCategory}
-        valueLabelDisplay="on"
-        aria-labelledby="range-slider"
-      />
-    </div>
+        </TextField>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography id="range-slider" gutterBottom>
+          Prices range
+        </Typography>
+        <Slider
+          value={[selectedMinPrice, selectedMaxPrice]}
+          onChange={(event, newValue) => {
+            console.log(newValue);
+            setSelectedMinPrice(newValue[0]);
+            setSelectedMaxPrice(newValue[1]);
+          }}
+          min={minPriceByCategory}
+          max={maxPriceByCategory}
+          valueLabelDisplay="on"
+          aria-labelledby="range-slider"
+        />
+      </Grid>
+    </Grid>
   );
 };
 
